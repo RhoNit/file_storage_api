@@ -62,5 +62,5 @@ func main() {
 	// engine.GET("/files", handler.GetUserFilesHandler, common.JWTAuthMiddleware)
 
 	// start the server
-	engine.Logger.Fatal(engine.Start("127.0.0.1:8085"))
+	engine.Logger.Fatal(engine.Start("0.0.0.0:8085"))
 }
