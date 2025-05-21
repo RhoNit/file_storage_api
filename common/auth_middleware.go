@@ -2,6 +2,7 @@ package common
 
 import (
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -32,13 +33,14 @@ func JWTAuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		// Get the token string
 		tokenString := parts[1]
 
+		jwtSecretKey := os.Getenv("JWT_SECRET_KEY")
 		// Parse and validate the token
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 			// Validate the signing method
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, echo.NewHTTPError(http.StatusUnauthorized, "invalid token signing method")
 			}
-			return []byte("secret"), nil
+			return []byte(jwtSecretKey), nil
 		})
 
 		if err != nil {

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/RhoNit/file_storage_api/common"
@@ -66,7 +67,8 @@ func (h *Handler) LoginUserHandler(c echo.Context) error {
 		"exp":      time.Now().Add(time.Minute * 30).Unix(),
 	})
 
-	tokenString, err := token.SignedString([]byte("secret"))
+	jwtSecretKey := os.Getenv("JWT_SECRET_KEY")
+	tokenString, err := token.SignedString([]byte(jwtSecretKey))
 	if err != nil {
 		h.ZapLogger.Error(
 			"Error while signing the secret key",
