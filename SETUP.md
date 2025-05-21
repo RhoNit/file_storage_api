@@ -1,3 +1,11 @@
+### Used Modules / Libraries
+
+- [`uber-go/zap`](https://github.com/uber-go/zap) – Used as a logger
+- [`golang-jwt/jwt/v5`](https://github.com/golang-jwt/jwt/v5) – Used for JWT utilities
+- [`joho/godotenv`](https://github.com/joho/godotenv) – Used as an environment variable loader
+- [`labstack/echo/v4`](https://github.com/labstack/echo/v4) – Used as the Echo web server framework
+
+
 ### Install required tools
 
 #### Install Swagger
