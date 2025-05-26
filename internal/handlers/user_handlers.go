@@ -75,18 +75,18 @@ func (h *Handler) RegisterUserHandler(c echo.Context) error {
 		)
 	}
 
-	nowTime := time.Now().In(loc)
+	timeNow := time.Now().In(loc)
 
-	user := &models.User{
+	user := &models.UserStruct{
 		Username:     req.Username,
 		PasswordHash: string(hashedPassword),
 		StorageUsed:  0,
-		CreatedAt:    nowTime,
+		CreatedAt:    timeNow,
 	}
 
 	// store the user into the in-memory store
 	common.UsersStore[req.Username] = user
-	common.FileMetadataStore[req.Username] = []models.FileMetadata{}
+	common.FileMetadataStore[req.Username] = []models.FileStruct{}
 
 	// Create user directory
 	userDir := filepath.Join("file_store", req.Username)

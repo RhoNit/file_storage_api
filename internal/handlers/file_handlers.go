@@ -127,13 +127,24 @@ func (h *Handler) UploadFileHandler(c echo.Context) error {
 		)
 	}
 
+	// load location as per Asia/Kolkata time
+	loc, err := time.LoadLocation("Asia/Kolkata")
+	if err != nil {
+		h.ZapLogger.Error(
+			"Error while loading location",
+			zap.Error(err),
+		)
+	}
+
+	timeNow := time.Now().In(loc)
+
 	// Update user storage and metadata
 	user.StorageUsed += file.Size
-	metadata := models.FileMetadata{
+	metadata := models.FileStruct{
 		Filename:     file.Filename,
 		OriginalName: file.Filename,
 		Size:         file.Size,
-		UploadTime:   time.Now(),
+		UploadTime:   timeNow,
 		Username:     username,
 	}
 	common.FileMetadataStore[username] = append(common.FileMetadataStore[username], metadata)
@@ -162,7 +173,7 @@ func (h *Handler) GetRemainingStorageHandler(c echo.Context) error {
 	username := c.Get("username").(string)
 	user := common.UsersStore[username]
 
-	info := models.StorageInfo{
+	info := models.StorageInfoStruct{
 		TotalStorage:     DefaultStorageQuota,
 		UsedStorage:      user.StorageUsed,
 		RemainingStorage: DefaultStorageQuota - user.StorageUsed,
@@ -236,7 +247,7 @@ func (h *Handler) GetUserFilesHandler(c echo.Context) error {
 	}
 
 	// construct paginated response
-	resp := models.PaginatedResponse{
+	resp := models.GellAllFilesPaginatedResponseStruct{
 		Data:       files[start:end],
 		Page:       page,
 		PageSize:   pageSize,

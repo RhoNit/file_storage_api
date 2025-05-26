@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type User struct {
+type UserStruct struct {
 	Username     string    `json:"username"`
 	PasswordHash string    `json:"-"`
 	StorageUsed  int64     `json:"storageUsed"`
