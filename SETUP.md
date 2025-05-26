@@ -39,8 +39,10 @@ go mod download
 ### 3. Configure environment
 ```bash
 # Create .env file from example
-# although in hurriedness, i didn't put things on .env file.
-# But vars like `JWT_SECRET`, `MAX_ALLOWED_STORAGE_PER_USER`, `DEFAULT_PAGE_SIZE` etc could be kept in the `.env` file 
+copy .env.sample .env
+# enter the value of the JWT_SECRET_KEY
+# although in hurriedness, i didn't keep much things on .env file except JWT_SECRET
+# But vars like `MAX_ALLOWED_STORAGE_PER_USER`, `DEFAULT_PAGE_SIZE` etc could be kept in the `.env` file 
 ```
 
 ### 4. Generate Swagger documentation
